@@ -1,0 +1,159 @@
+struct mm_struct {
+	struct {
+		struct vm_area_struct * mmap;            /*     0     8 */
+		struct rb_root     mm_rb;                /*     8     8 */
+		u64                vmacache_seqnum;      /*    16     8 */
+		rwlock_t           mm_rb_lock;           /*    24     8 */
+		long unsigned int  (*get_unmapped_area)(struct file *, long unsigned int, long unsigned int, long unsigned int, long unsigned int); /*    32     8 */
+		long unsigned int  mmap_base;            /*    40     8 */
+		long unsigned int  mmap_legacy_base;     /*    48     8 */
+		long unsigned int  task_size;            /*    56     8 */
+		/* --- cacheline 1 boundary (64 bytes) --- */
+		long unsigned int  highest_vm_end;       /*    64     8 */
+		pgd_t *            pgd;                  /*    72     8 */
+		atomic_t           membarrier_state;     /*    80     4 */
+		atomic_t           mm_users;             /*    84     4 */
+		atomic_t           mm_count;             /*    88     4 */
+		atomic_t           has_pinned;           /*    92     4 */
+		atomic_long_t      pgtables_bytes;       /*    96     8 */
+		int                map_count;            /*   104     4 */
+		spinlock_t         page_table_lock;      /*   108     4 */
+		struct rw_semaphore mmap_lock;           /*   112    64 */
+		/* --- cacheline 2 boundary (128 bytes) was 48 bytes ago --- */
+		struct list_head   mmlist;               /*   176    16 */
+		/* --- cacheline 3 boundary (192 bytes) --- */
+		long unsigned int  hiwater_rss;          /*   192     8 */
+		long unsigned int  hiwater_vm;           /*   200     8 */
+		long unsigned int  total_vm;             /*   208     8 */
+		long unsigned int  locked_vm;            /*   216     8 */
+		atomic64_t         pinned_vm;            /*   224     8 */
+		long unsigned int  data_vm;              /*   232     8 */
+		long unsigned int  exec_vm;              /*   240     8 */
+		long unsigned int  stack_vm;             /*   248     8 */
+		/* --- cacheline 4 boundary (256 bytes) --- */
+		long unsigned int  def_flags;            /*   256     8 */
+		seqcount_t         write_protect_seq;    /*   264     4 */
+		spinlock_t         arg_lock;             /*   268     4 */
+		long unsigned int  start_code;           /*   272     8 */
+		long unsigned int  end_code;             /*   280     8 */
+		long unsigned int  start_data;           /*   288     8 */
+		long unsigned int  end_data;             /*   296     8 */
+		long unsigned int  start_brk;            /*   304     8 */
+		long unsigned int  brk;                  /*   312     8 */
+		/* --- cacheline 5 boundary (320 bytes) --- */
+		long unsigned int  start_stack;          /*   320     8 */
+		long unsigned int  arg_start;            /*   328     8 */
+		long unsigned int  arg_end;              /*   336     8 */
+		long unsigned int  env_start;            /*   344     8 */
+		long unsigned int  env_end;              /*   352     8 */
+		long unsigned int  saved_auxv[46];       /*   360   368 */
+		/* --- cacheline 11 boundary (704 bytes) was 24 bytes ago --- */
+		struct mm_rss_stat rss_stat;             /*   728    32 */
+		struct linux_binfmt * binfmt;            /*   760     8 */
+		/* --- cacheline 12 boundary (768 bytes) --- */
+		mm_context_t       context;              /*   768    40 */
+		long unsigned int  flags;                /*   808     8 */
+		struct core_state * core_state;          /*   816     8 */
+		spinlock_t         ioctx_lock;           /*   824     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		/* --- cacheline 13 boundary (832 bytes) --- */
+		struct kioctx_table * ioctx_table;       /*   832     8 */
+		struct task_struct * owner;              /*   840     8 */
+		struct user_namespace * user_ns;         /*   848     8 */
+		struct file *      exe_file;             /*   856     8 */
+		struct mmu_notifier_subscriptions * notifier_subscriptions; /*   864     8 */
+		atomic_t           tlb_flush_pending;    /*   872     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct uprobes_state uprobes_state;      /*   880     8 */
+		struct work_struct async_put_work;       /*   888    48 */
+		/* --- cacheline 14 boundary (896 bytes) was 40 bytes ago --- */
+		u32                pasid;                /*   936     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		u64                android_kabi_reserved1; /*   944     8 */
+	};                                               /*     0   952 */
+	struct {
+		struct vm_area_struct *    mmap;                 /*     0     8 */
+		struct rb_root             mm_rb;                /*     8     8 */
+		u64                        vmacache_seqnum;      /*    16     8 */
+		rwlock_t                   mm_rb_lock;           /*    24     8 */
+		long unsigned int          (*get_unmapped_area)(struct file *, long unsigned int, long unsigned int, long unsigned int, long unsigned int); /*    32     8 */
+		long unsigned int          mmap_base;            /*    40     8 */
+		long unsigned int          mmap_legacy_base;     /*    48     8 */
+		long unsigned int          task_size;            /*    56     8 */
+		long unsigned int          highest_vm_end;       /*    64     8 */
+		pgd_t *                    pgd;                  /*    72     8 */
+		atomic_t                   membarrier_state;     /*    80     4 */
+		atomic_t                   mm_users;             /*    84     4 */
+		atomic_t                   mm_count;             /*    88     4 */
+		atomic_t                   has_pinned;           /*    92     4 */
+		atomic_long_t              pgtables_bytes;       /*    96     8 */
+		int                        map_count;            /*   104     4 */
+		spinlock_t                 page_table_lock;      /*   108     4 */
+		struct rw_semaphore        mmap_lock;            /*   112    64 */
+		struct list_head           mmlist;               /*   176    16 */
+		long unsigned int          hiwater_rss;          /*   192     8 */
+		long unsigned int          hiwater_vm;           /*   200     8 */
+		long unsigned int          total_vm;             /*   208     8 */
+		long unsigned int          locked_vm;            /*   216     8 */
+		atomic64_t                 pinned_vm;            /*   224     8 */
+		long unsigned int          data_vm;              /*   232     8 */
+		long unsigned int          exec_vm;              /*   240     8 */
+		long unsigned int          stack_vm;             /*   248     8 */
+		long unsigned int          def_flags;            /*   256     8 */
+		seqcount_t                 write_protect_seq;    /*   264     4 */
+		spinlock_t                 arg_lock;             /*   268     4 */
+		long unsigned int          start_code;           /*   272     8 */
+		long unsigned int          end_code;             /*   280     8 */
+		long unsigned int          start_data;           /*   288     8 */
+		long unsigned int          end_data;             /*   296     8 */
+		long unsigned int          start_brk;            /*   304     8 */
+		long unsigned int          brk;                  /*   312     8 */
+		long unsigned int          start_stack;          /*   320     8 */
+		long unsigned int          arg_start;            /*   328     8 */
+		long unsigned int          arg_end;              /*   336     8 */
+		long unsigned int          env_start;            /*   344     8 */
+		long unsigned int          env_end;              /*   352     8 */
+		long unsigned int          saved_auxv[46];       /*   360   368 */
+		struct mm_rss_stat         rss_stat;             /*   728    32 */
+		struct linux_binfmt *      binfmt;               /*   760     8 */
+		mm_context_t               context;              /*   768    40 */
+		long unsigned int          flags;                /*   808     8 */
+		struct core_state *        core_state;           /*   816     8 */
+		spinlock_t                 ioctx_lock;           /*   824     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct kioctx_table *      ioctx_table;          /*   832     8 */
+		struct task_struct *       owner;                /*   840     8 */
+		struct user_namespace *    user_ns;              /*   848     8 */
+		struct file *              exe_file;             /*   856     8 */
+		struct mmu_notifier_subscriptions * notifier_subscriptions; /*   864     8 */
+		atomic_t                   tlb_flush_pending;    /*   872     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct uprobes_state       uprobes_state;        /*   880     8 */
+		struct work_struct         async_put_work;       /*   888    48 */
+		u32                        pasid;                /*   936     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		u64                        android_kabi_reserved1; /*   944     8 */
+
+		/* size: 952, cachelines: 15, members: 58 */
+		/* sum members: 940, holes: 3, sum holes: 12 */
+		/* last cacheline: 56 bytes */
+	};
+
+	long unsigned int          cpu_bitmap[];         /*   952     0 */
+
+	/* size: 952, cachelines: 15, members: 2 */
+	/* last cacheline: 56 bytes */
+};
+

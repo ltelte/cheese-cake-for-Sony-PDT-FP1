@@ -1,0 +1,187 @@
+struct mm_struct {
+	struct {
+		struct vm_area_struct * mmap;            /*     0     8 */
+		struct rb_root     mm_rb;                /*     8     8 */
+		u64                vmacache_seqnum;      /*    16     8 */
+		rwlock_t           mm_rb_lock;           /*    24     8 */
+		unsigned long      (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long); /*    32     8 */
+		unsigned long      mmap_base;            /*    40     8 */
+		unsigned long      mmap_legacy_base;     /*    48     8 */
+		unsigned long      task_size;            /*    56     8 */
+		/* --- cacheline 1 boundary (64 bytes) --- */
+		unsigned long      highest_vm_end;       /*    64     8 */
+		pgd_t *            pgd;                  /*    72     8 */
+		atomic_t           membarrier_state;     /*    80     4 */
+		atomic_t           mm_users;             /*    84     4 */
+		atomic_t           mm_count;             /*    88     4 */
+		atomic_t           has_pinned;           /*    92     4 */
+		atomic_long_t      pgtables_bytes;       /*    96     8 */
+		int                map_count;            /*   104     4 */
+		spinlock_t         page_table_lock;      /*   108     4 */
+		struct rw_semaphore mmap_lock;           /*   112    64 */
+		/* --- cacheline 2 boundary (128 bytes) was 48 bytes ago --- */
+		struct list_head   mmlist;               /*   176    16 */
+		/* --- cacheline 3 boundary (192 bytes) --- */
+		unsigned long      hiwater_rss;          /*   192     8 */
+		unsigned long      hiwater_vm;           /*   200     8 */
+		unsigned long      total_vm;             /*   208     8 */
+		unsigned long      locked_vm;            /*   216     8 */
+		atomic64_t         pinned_vm;            /*   224     8 */
+		unsigned long      data_vm;              /*   232     8 */
+		unsigned long      exec_vm;              /*   240     8 */
+		unsigned long      stack_vm;             /*   248     8 */
+		/* --- cacheline 4 boundary (256 bytes) --- */
+		unsigned long      def_flags;            /*   256     8 */
+		seqcount_t         write_protect_seq;    /*   264     4 */
+		spinlock_t         arg_lock;             /*   268     4 */
+		unsigned long      start_code;           /*   272     8 */
+		unsigned long      end_code;             /*   280     8 */
+		unsigned long      start_data;           /*   288     8 */
+		unsigned long      end_data;             /*   296     8 */
+		unsigned long      start_brk;            /*   304     8 */
+		unsigned long      brk;                  /*   312     8 */
+		/* --- cacheline 5 boundary (320 bytes) --- */
+		unsigned long      start_stack;          /*   320     8 */
+		unsigned long      arg_start;            /*   328     8 */
+		unsigned long      arg_end;              /*   336     8 */
+		unsigned long      env_start;            /*   344     8 */
+		unsigned long      env_end;              /*   352     8 */
+		unsigned long      saved_auxv[46];       /*   360   368 */
+		/* --- cacheline 11 boundary (704 bytes) was 24 bytes ago --- */
+		struct mm_rss_stat rss_stat;             /*   728    32 */
+		struct linux_binfmt * binfmt;            /*   760     8 */
+		/* --- cacheline 12 boundary (768 bytes) --- */
+		mm_context_t       context;              /*   768    40 */
+		unsigned long      flags;                /*   808     8 */
+		struct core_state * core_state;          /*   816     8 */
+		spinlock_t         ioctx_lock;           /*   824     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		/* --- cacheline 13 boundary (832 bytes) --- */
+		struct kioctx_table * ioctx_table;       /*   832     8 */
+		struct task_struct * owner;              /*   840     8 */
+		struct user_namespace * user_ns;         /*   848     8 */
+		struct file *      exe_file;             /*   856     8 */
+		struct mmu_notifier_subscriptions * notifier_subscriptions; /*   864     8 */
+		struct percpu_rw_semaphore * mmu_notifier_lock; /*   872     8 */
+		atomic_t           tlb_flush_pending;    /*   880     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct uprobes_state uprobes_state;      /*   888     8 */
+		/* --- cacheline 14 boundary (896 bytes) --- */
+		struct work_struct async_put_work;       /*   896    48 */
+		u32                pasid;                /*   944     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct {
+			struct list_head list;           /*   952    16 */
+			/* --- cacheline 15 boundary (960 bytes) was 8 bytes ago --- */
+			struct mem_cgroup * memcg;       /*   968     8 */
+			nodemask_t nodes;                /*   976     8 */
+		} lru_gen;                               /*   952    32 */
+		struct {
+			struct list_head   list;                 /*     0    16 */
+			struct mem_cgroup * memcg;               /*    16     8 */
+			nodemask_t         nodes;                /*    24     8 */
+		};
+
+		u64                android_kabi_reserved1; /*   984     8 */
+	};                                               /*     0   992 */
+	struct {
+		struct vm_area_struct *    mmap;                 /*     0     8 */
+		struct rb_root             mm_rb;                /*     8     8 */
+		u64                        vmacache_seqnum;      /*    16     8 */
+		rwlock_t                   mm_rb_lock;           /*    24     8 */
+		unsigned long              (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long); /*    32     8 */
+		unsigned long              mmap_base;            /*    40     8 */
+		unsigned long              mmap_legacy_base;     /*    48     8 */
+		unsigned long              task_size;            /*    56     8 */
+		unsigned long              highest_vm_end;       /*    64     8 */
+		pgd_t *                    pgd;                  /*    72     8 */
+		atomic_t                   membarrier_state;     /*    80     4 */
+		atomic_t                   mm_users;             /*    84     4 */
+		atomic_t                   mm_count;             /*    88     4 */
+		atomic_t                   has_pinned;           /*    92     4 */
+		atomic_long_t              pgtables_bytes;       /*    96     8 */
+		int                        map_count;            /*   104     4 */
+		spinlock_t                 page_table_lock;      /*   108     4 */
+		struct rw_semaphore        mmap_lock;            /*   112    64 */
+		struct list_head           mmlist;               /*   176    16 */
+		unsigned long              hiwater_rss;          /*   192     8 */
+		unsigned long              hiwater_vm;           /*   200     8 */
+		unsigned long              total_vm;             /*   208     8 */
+		unsigned long              locked_vm;            /*   216     8 */
+		atomic64_t                 pinned_vm;            /*   224     8 */
+		unsigned long              data_vm;              /*   232     8 */
+		unsigned long              exec_vm;              /*   240     8 */
+		unsigned long              stack_vm;             /*   248     8 */
+		unsigned long              def_flags;            /*   256     8 */
+		seqcount_t                 write_protect_seq;    /*   264     4 */
+		spinlock_t                 arg_lock;             /*   268     4 */
+		unsigned long              start_code;           /*   272     8 */
+		unsigned long              end_code;             /*   280     8 */
+		unsigned long              start_data;           /*   288     8 */
+		unsigned long              end_data;             /*   296     8 */
+		unsigned long              start_brk;            /*   304     8 */
+		unsigned long              brk;                  /*   312     8 */
+		unsigned long              start_stack;          /*   320     8 */
+		unsigned long              arg_start;            /*   328     8 */
+		unsigned long              arg_end;              /*   336     8 */
+		unsigned long              env_start;            /*   344     8 */
+		unsigned long              env_end;              /*   352     8 */
+		unsigned long              saved_auxv[46];       /*   360   368 */
+		struct mm_rss_stat         rss_stat;             /*   728    32 */
+		struct linux_binfmt *      binfmt;               /*   760     8 */
+		mm_context_t               context;              /*   768    40 */
+		unsigned long              flags;                /*   808     8 */
+		struct core_state *        core_state;           /*   816     8 */
+		spinlock_t                 ioctx_lock;           /*   824     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct kioctx_table *      ioctx_table;          /*   832     8 */
+		struct task_struct *       owner;                /*   840     8 */
+		struct user_namespace *    user_ns;              /*   848     8 */
+		struct file *              exe_file;             /*   856     8 */
+		struct mmu_notifier_subscriptions * notifier_subscriptions; /*   864     8 */
+		struct percpu_rw_semaphore * mmu_notifier_lock;  /*   872     8 */
+		atomic_t                   tlb_flush_pending;    /*   880     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct uprobes_state       uprobes_state;        /*   888     8 */
+		struct work_struct         async_put_work;       /*   896    48 */
+		u32                        pasid;                /*   944     4 */
+
+		/* XXX 4 bytes hole, try to pack */
+
+		struct {
+			struct list_head   list;                 /*   952    16 */
+			struct mem_cgroup * memcg;               /*   968     8 */
+			nodemask_t         nodes;                /*   976     8 */
+		} lru_gen;                                       /*   952    32 */
+		struct {
+			struct list_head           list;                 /*     0    16 */
+			struct mem_cgroup *        memcg;                /*    16     8 */
+			nodemask_t                 nodes;                /*    24     8 */
+
+			/* size: 32, cachelines: 1, members: 3 */
+			/* last cacheline: 32 bytes */
+		};
+
+		u64                        android_kabi_reserved1; /*   984     8 */
+
+		/* size: 992, cachelines: 16, members: 60 */
+		/* sum members: 980, holes: 3, sum holes: 12 */
+		/* last cacheline: 32 bytes */
+	};
+
+	unsigned long              cpu_bitmap[];         /*   992     0 */
+
+	/* size: 992, cachelines: 16, members: 2 */
+	/* last cacheline: 32 bytes */
+};
+

