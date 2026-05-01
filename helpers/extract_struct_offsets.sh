@@ -21,14 +21,30 @@ fi
 echo "=== Update exploit.c with these values ==="
 echo ""
 
+# Cache task_struct output - reuse if it exists and has content
+if [ -s "$VMLINUX.task_struct" ]; then
+    echo "Using cached task_struct output"
+else
+    echo "Extracting task_struct with pahole..."
+    pahole -C task_struct "$VMLINUX" > $VMLINUX.task_struct
+fi
+
+# Cache mm_struct output - reuse if it exists and has content
+if [ -s "$VMLINUX.mm_struct" ]; then
+    echo "Using cached mm_struct output"
+else
+    echo "Extracting mm_struct with pahole..."
+    pahole -C mm_struct "$VMLINUX" > $VMLINUX.mm_struct
+fi
+
 # Extract task_struct offsets (handle variable whitespace)
-tasks_offset=$(pahole -C task_struct "$VMLINUX" | grep "struct list_head.*tasks;" | grep -oP '/\*\s*\K\d+' | head -1)
-mm_offset=$(pahole -C task_struct "$VMLINUX" | grep "struct mm_struct \*.*mm;" | grep -oP '/\*\s*\K\d+' | head -1)
-pid_offset=$(pahole -C task_struct "$VMLINUX" | grep "pid_t.*pid;" | grep -oP '/\*\s*\K\d+' | head -1)
-seccomp_offset=$(pahole -C task_struct "$VMLINUX" | grep "struct seccomp.*seccomp;" | grep -oP '/\*\s*\K\d+' | head -1)
+tasks_offset=$(grep "struct list_head.*tasks;" $VMLINUX.task_struct | grep -oP '/\*\s*\K\d+' | head -1)
+mm_offset=$(grep "struct mm_struct \*.*mm;" $VMLINUX.task_struct | grep -oP '/\*\s*\K\d+' | head -1)
+pid_offset=$(grep "pid_t.*pid;" $VMLINUX.task_struct | grep -oP '/\*\s*\K\d+' | head -1)
+seccomp_offset=$(grep "struct seccomp.*seccomp;" $VMLINUX.task_struct | grep -oP '/\*\s*\K\d+' | head -1)
 
 # Extract mm_struct offsets
-pgd_offset=$(pahole -C mm_struct "$VMLINUX" | grep "pgd_t \*.*pgd;" | grep -oP '/\*\s*\K\d+' | head -1)
+pgd_offset=$(grep "pgd_t \*.*pgd;" $VMLINUX.mm_struct | grep -oP '/\*\s*\K\d+' | head -1)
 
 # Print exploit.c changes
 if [ -n "$mm_offset" ]; then
