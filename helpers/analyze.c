@@ -6,8 +6,8 @@
 #include <stdint.h>
 
 #define TARGET_SYMBOL "__do_sys_capset aka. __arm64_sys_capset"
-#define PHYS_ADDR 0x140ca4
-#define MAX_SIZE 0x48c
+#define PHYS_ADDR 0x26e0fb
+#define MAX_SIZE 0x2c0
 #define TMP_BIN "func.bin"
 
 // Find actual function end by looking for ret instruction
