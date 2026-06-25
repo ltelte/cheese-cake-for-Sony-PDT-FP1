@@ -1,4 +1,3 @@
-./helpers/extract_offsets.sh ./helpers/kallsyms-kernel.dump.txt
 === Update exploit.c with these values ===
 
 Line 652: #define IDMAP_PG_DIR_OFFSET 0x284d000
