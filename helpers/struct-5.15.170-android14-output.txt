@@ -1,0 +1,12 @@
+=== Update exploit.c with these values ===
+
+Extracting task_struct with pahole...
+Extracting mm_struct with pahole...
+Line 122: #define OFFSETOF_TASK_STRUCT_MM 0x588
+Line 123: #define OFFSETOF_MM_PGD 0x40
+
+Hardcoded offsets in exploit.c:
+Line 1098, 1108: task_struct->tasks = 0x538
+Line 1112: task_struct->pid = 0x640
+Line 1724 (seccomp shellcode): task_struct->seccomp = 0x8c8
+Line 1725 (seccomp shellcode): task_struct->seccomp.filter = 0x8d0
